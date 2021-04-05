@@ -1,7 +1,8 @@
 import solver
 
+
+ordinal = solver.ordinal
 _split = lambda x: x.split(', ') if ' ' in x else x.split(',')
-ordinal = lambda n: "%d%s" % (n, "tsnrhtdd"[(n // 10 % 10 != 1) * (n % 10 < 4) * n % 10::4])
 
 indicators = {
     'SND': False,
@@ -52,3 +53,6 @@ while True:
         letter_groups = _split(letter_groups)
 
         print("Enter in \"%s\"" % solver.password(letter_groups))
+
+    elif module_name == "memory":
+        solver.memory()

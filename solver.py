@@ -1,6 +1,8 @@
 import re
 
 
+ordinal = lambda n: "%d%s" % (n, "tsnrhtdd"[(n // 10 % 10 != 1) * (n % 10 < 4) * n % 10::4])
+
 def last_of_instance(list_of_elements, instance):
     return next(i for i in reversed(range(len(list_of_elements))) if list_of_elements[i] == instance) + 1
 
@@ -174,6 +176,101 @@ def simon_says(serial):
                         output_colors.append("red")
 
         print("Press the following colors in order: \"%s\"" % ' - '.join(output_colors).upper())
+
+
+def memory():
+    stage_one_pos = 0
+    stage_two_pos = 0
+    stage_three_pos = 0
+    stage_four_pos = 0
+    stage_five_pos = 0
+
+    stage_one_num = 0
+    stage_two_num = 0
+    stage_three_num = 0
+    stage_four_num = 0
+    stage_five_num = 0
+
+    while True:
+        display = int(input("What is the big number on the display? "))
+
+        if display == "done":
+            break
+
+        stage = int(input("What stage are you up to? "))
+
+        if stage == 1:
+            if display == 1:
+                stage_one_pos = 2
+            elif display == 2:
+                stage_one_pos = 2
+            elif display == 3:
+                stage_one_pos = 3
+            elif display == 4:
+                stage_one_pos = 4
+
+            stage_one_num = int(input("What is the number in the \"%s Position\"? " % ordinal(stage_one_pos)))
+            print("Press the \"%s Position\"." % ordinal(stage_one_pos))
+
+        elif stage == 2:
+            if display == 1:
+                stage_two_num = 4
+            elif display == 2:
+                stage_two_pos = stage_one_pos
+            elif display == 3:
+                stage_two_pos = 1
+            elif display == 4:
+                stage_two_pos = stage_one_pos
+
+            if stage_two_pos != 0:
+                stage_two_num = int(input("What is the number in the \"%s Position\"? " % ordinal(stage_two_pos)))
+                print("Press the \"%s Position\"." % ordinal(stage_two_pos))
+            else:
+                stage_two_pos = int(input("What is the position of the button labelled \"%s\"? " % stage_two_num))
+                print("Press the button labelled \"%s\"." % stage_two_num)
+
+        elif stage == 3:
+            if display == 1:
+                stage_three_num = stage_two_num
+            elif display == 2:
+                stage_three_num = stage_one_num
+            elif display == 3:
+                stage_three_pos = 3
+            elif display == 4:
+                stage_three_num = 4
+
+            if stage_three_pos != 0:
+                stage_three_num = int(input("What is the number in the \"%s Position\"? " % ordinal(stage_three_pos)))
+                print("Press the \"%s Position\"." % ordinal(stage_three_pos))
+            else:
+                stage_three_pos = int(input("What is the position of the button labelled \"%s\"? " % stage_three_num))
+                print("Press the button labelled \"%s\"." % stage_three_num)
+
+        elif stage == 4:
+            if display == 1:
+                stage_four_pos = stage_one_pos
+            elif display == 2:
+                stage_four_pos = 1
+            elif display == 3:
+                stage_four_pos = stage_two_pos
+            elif display == 4:
+                stage_four_pos = stage_two_pos
+
+            stage_four_num = int(input("What is the number in the \"%s Position\"? " % ordinal(stage_four_pos)))
+            print("Press the \"%s Position\"." % ordinal(stage_four_pos))
+
+        elif stage == 5:
+            if display == 1:
+                stage_five_num = stage_one_num
+            elif display == 2:
+                stage_five_num = stage_two_num
+            elif display == 3:
+                stage_five_num = stage_four_num
+            elif display == 4:
+                stage_five_num = stage_three_num
+
+            stage_five_pos = int(input("What is the position of the button labelled \"%s\"? " % stage_five_num))
+            print("Press the button labelled \"%s\"." % stage_five_num)
 
 
 def password(groups):
